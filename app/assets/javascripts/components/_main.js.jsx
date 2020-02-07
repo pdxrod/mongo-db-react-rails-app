@@ -1,7 +1,7 @@
 const Main = (props) => {
     return(
       <div>
-        <h2>Fruit or fruits?</h2>
+        <h2>Add a new named attribute, and its contents, below</h2>
         <Body />
       </div>
     )
