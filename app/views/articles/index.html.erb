@@ -17,7 +17,8 @@
         <td><%= article[:classification] %></td>
         <td><%= link_to 'show', article %></td>
         <td><%= link_to 'edit', edit_article_path(article) %></td>
-        <td><%= link_to 'delete', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'delete', article_path(article), method: :delete, data: { confirm: 'are you sure?' } %></td>
+
       </tr>
     <% end %>
   </tbody>
