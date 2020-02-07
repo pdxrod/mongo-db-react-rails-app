@@ -1,7 +1,7 @@
 const Body = (props) => {
     return(
         <div>
-          <Fruits />
+          <Articles />
         </div>
     )
 }

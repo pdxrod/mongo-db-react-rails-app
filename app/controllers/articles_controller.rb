@@ -1,8 +1,31 @@
+module OurTextHelper
+  def pluralize_upcase(singular)
+    the_thing = singular.to_s.upcase
+    return the_thing if the_thing == "FRUIT" || the_thing == "SPORT" # It should be SPORT bar not SPORTS bar
+    the_thing.pluralize(2).upcase
+  end
+end
+
 class ArticlesController < ApplicationController
+  include OurTextHelper
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
+    items = []
+    classifications = []
+
+# This is to make it show classification (e.g. CAR) only once, at the top of the items - see render() in _article.js.jsx
+    @articles.each do |article|
+      item = {id: article.id, category: pluralize_upcase(article.classification), classification: article.classification, name: article.name, description: article.description}
+      if classifications.include? article.classification
+        item[:category] = ""
+      else
+        classifications << article.classification
+      end
+      items << item
+    end
+    @articles = items.dup
   end
 
   def show

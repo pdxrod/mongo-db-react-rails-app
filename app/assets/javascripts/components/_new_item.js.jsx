@@ -1,4 +1,4 @@
-const NewFruit = (props) => {
+const NewArticle = (props) => {
   let formFields = {}
 
   return(
