@@ -26,6 +26,7 @@ class ArticlesController < ApplicationController
       items << item
     end
     @articles = items.dup
+    render json: @articles
   end
 
   def show
