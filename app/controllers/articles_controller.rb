@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
 
 # This is to make it show classification (e.g. CAR) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
-      item = {id: article.id, category: pluralize_upcase(article.classification), classification: article.classification, name: article.name, description: article.description}
+      item = {id: article.id, category: pluralize_upcase(article.classification), classification: article.classification, name: article.name}
       if classifications.include? article.classification
         item[:category] = ""
       else
@@ -79,6 +79,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:name, :content)
+      params.require(:article).permit(:name, :classification, :id)
     end
 end

@@ -4,7 +4,7 @@ const AllArticles = (props) => {
     return(
       <div key={article.id}>
        <Article article={article} handleDelete={props.handleDelete} handleUpdate={props.handleUpdate}
-                            handleConsole={props.handleConsole}
+                                  handleConsole={props.handleConsole}
        />
       </div>
     )

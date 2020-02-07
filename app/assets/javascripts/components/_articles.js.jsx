@@ -22,10 +22,10 @@ class Articles extends React.Component {
       div.innerText += text
   }
 
-  handleFormSubmit(classification, name, description){
-    let body = JSON.stringify({article: {classification: classification, name: name, description: description} })
+  handleFormSubmit(classification, name){
+    let body = JSON.stringify({article: {classification: classification, name: name} })
 
-    fetch('http://localhost:3000/api/v1/articles', {
+    fetch('http://localhost:3000/articles', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ class Articles extends React.Component {
   }
 
   handleDelete(id){
-    fetch(`http://localhost:3000/api/v1/articles/${id}`,
+    fetch(`http://localhost:3000/articles/${id}`,
     {
       method: 'DELETE',
       headers: {
@@ -64,7 +64,7 @@ class Articles extends React.Component {
   }
 
   handleUpdate(article){
-    fetch(`http://localhost:3000/api/v1/articles/${article.id}`,
+    fetch(`http://localhost:3000/articles/${article.id}`,
     {
       method: 'PUT',
       body: JSON.stringify({article: article}),
@@ -89,7 +89,7 @@ class Articles extends React.Component {
   }
 
   componentDidMount(){
-    fetch('/api/v1/articles.json')
+    fetch('/articles.json')
       .then((response) => {return response.json()})
       .then((data) => {this.setState({ articles: data }) });
   }
