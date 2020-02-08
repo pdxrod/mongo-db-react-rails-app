@@ -10,7 +10,11 @@
   </head>
 
   <body>
-    <%= yield %>
-    <div id='console' name='console' />
+    <main>
+      <%= yield %>
+    </main>
+    <footer>
+    <div id='console' name='console' style:'font-size: small; position: fixed; bottom: 0'/>
+    </footer>
   </body>
 </html>

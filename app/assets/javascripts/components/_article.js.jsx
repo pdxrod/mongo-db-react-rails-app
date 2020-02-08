@@ -13,7 +13,7 @@ class Article extends React.Component{
    if(this.state.editable) {
       let name = this.name.value
       let classification = this.classification.value
-      let id = this.props.article.id
+      let id = this.props.article.id['$oid']
       let category = this.props.article.classification
       let article = {id: id, classification: classification, name: name}
 
@@ -40,7 +40,6 @@ class Article extends React.Component{
       <div>
         {category}
         <ul>
-          {id}
           {classification}
           {name}
           <button onClick={() => this.handleEdit()}>{this.state.editable? 'submit' : 'edit'}</button>
