@@ -8,7 +8,6 @@ end
 
 class ArticlesController < ApplicationController
   include OurTextHelper
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
