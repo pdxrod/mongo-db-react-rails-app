@@ -25,7 +25,7 @@ class Articles extends React.Component {
   handleFormSubmit(classification, name){
     let body = JSON.stringify({article: {classification: classification, name: name} })
 
-    fetch('http://localhost:3000/articles', {
+    fetch('/articles', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ class Articles extends React.Component {
   }
 
   handleDelete(id){
-    fetch(`http://localhost:3000/articles/${id}`,
+    fetch(`/articles/${id}`,
     {
       method: 'DELETE',
       headers: {
@@ -64,7 +64,7 @@ class Articles extends React.Component {
   }
 
   handleUpdate(article){
-    fetch(`http://localhost:3000/articles/${article.id}`,
+    fetch(`/articles/${article.id}`,
     {
       method: 'PUT',
       body: JSON.stringify({article: article}),
