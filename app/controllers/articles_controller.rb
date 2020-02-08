@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    set_article
+    @article = Article.find(article_params[:id])
   end
 
   def new
@@ -40,6 +40,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    @article = Article.find(article_params[:id])
   end
 
   def create
@@ -47,18 +48,14 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.save
-        format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
-        format.html { render :new }
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-
-
     @article = Article.find(article_params[:id])
 
     respond_to do |format|
@@ -71,9 +68,10 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    @article = Article.find(article_params[:id])
+
     @article.destroy
     respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -82,6 +80,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:name, :classification, :id)
+      params.require(:article).permit(:name, :classification, :id, :category)
     end
 end

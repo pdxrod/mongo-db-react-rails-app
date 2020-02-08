@@ -43,7 +43,7 @@ class Article extends React.Component{
           <span> {classification} </span>
           <span> {name} </span>
           <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
-          <button onClick={() => this.props.handleDelete(id)}>delete</button>
+          <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
         </ul>
       </div>
     )

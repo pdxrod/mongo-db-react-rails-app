@@ -44,10 +44,12 @@ class Articles extends React.Component {
     })
   }
 
-  handleDelete(id){
+  handleDelete(article){
+    const id = article.id['$oid']
     fetch(`/articles/${id}`,
     {
       method: 'DELETE',
+      body: JSON.stringify( {article: {id: id}} ),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -57,14 +59,14 @@ class Articles extends React.Component {
   }
 
   deleteArticle(id){
-    newArticles = this.state.articles.filter((article) => article.id !== id)
+    newArticles = this.state.articles.filter((article) => article.id['$oid'] !== id)
     this.setState({
       articles: newArticles
     })
   }
 
   handleUpdate(article){
-    fetch(`/articles/${article.id}`,
+    fetch(`/articles/${article.id['$oid']}`,
     {
       method: 'PUT',
       body: JSON.stringify({article: article}),
@@ -77,7 +79,7 @@ class Articles extends React.Component {
   }
 
   updateArticle(article){
-    let newArticles = this.state.articles.filter((f) => f.id !== article.id)
+    let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id['$oid'])
     for( i = 0; i < this.state.articles.length; i ++ )
       if( this.state.articles[ i ].id == article.id )
         newArticles.splice(i, 0, article);
