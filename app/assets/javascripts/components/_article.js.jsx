@@ -40,9 +40,9 @@ class Article extends React.Component{
       <div>
         {category}
         <ul>
-          {classification}
-          {name}
-          <button onClick={() => this.handleEdit()}>{this.state.editable? 'submit' : 'edit'}</button>
+          <span> {classification} </span>
+          <span> {name} </span>
+          <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(id)}>delete</button>
         </ul>
       </div>
