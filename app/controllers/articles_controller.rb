@@ -17,7 +17,6 @@ class ArticlesController < ApplicationController
 # This is to make it show classification (e.g. CAR) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
 
-# puts "\n\nArticles controller article.id #{article.id}"
 
       item = {id: article.id, category: pluralize_upcase(article.classification), classification: article.classification, name: article.name}
       if classifications.include? article.classification
@@ -28,13 +27,13 @@ class ArticlesController < ApplicationController
       items << item
     end
     @articles = items.dup
+   puts "\n\nArticles controller @articles #{@articles}"
+
+
     render json: @articles
   end
 
   def create
-
-puts "\n create params #{article_params}"
-
     @article = Article.create(article_params)
     render json: @article
   end

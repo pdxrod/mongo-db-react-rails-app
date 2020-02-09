@@ -33,7 +33,7 @@ class Article extends React.Component{
     let name = this.state.editable ? <input type='text' ref={input => this.name = input} defaultValue={this.props.article.name}/>:<b>{this.props.article.name}</b>
     let classification = this.state.editable ? <input type='text' ref={input => this.classification = input} defaultValue={this.props.article.classification}/>:<span></span>
     let id = this.props.article.id['$oid']
-    let category = <h3>{this.props.article.classification}</h3>
+    let category = <h3>{this.props.article.category}</h3>
     this.props.handleConsole(" render "+this.props.article.name+" id "+id)
 
     return(
