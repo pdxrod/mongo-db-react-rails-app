@@ -101,7 +101,8 @@ class Articles extends React.Component {
       <div>
         <AllArticles articles={this.state.articles} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate}
                                               handleConsole={this.handleConsole}/>
-
+        <div>New</div>
+        <NewArticle handleFormSubmit={this.handleFormSubmit}/>
       </div>
     )
   }

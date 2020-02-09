@@ -32,6 +32,9 @@ class ArticlesController < ApplicationController
   end
 
   def create
+
+puts "\n create params #{article_params}"
+
     @article = Article.create(article_params)
     render json: @article
   end
