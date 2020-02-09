@@ -1,7 +1,14 @@
 const Body = (props) => {
     return(
         <div>
-          <Articles />
+          <div>
+            <Articles />
+          </div>
+          <div>
+            New
+            <NewArticle handleFormSubmit={this.handleFormSubmit}/>
+          </div>
         </div>
+      
     )
 }
