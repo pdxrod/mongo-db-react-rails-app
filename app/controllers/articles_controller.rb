@@ -17,7 +17,8 @@ class ArticlesController < ApplicationController
 # This is to make it show classification (e.g. CAR) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
 
-      item = {id: article.id, category: pluralize_upcase(article.classification), classification: article.classification, name: article.name}
+      item = {id: article.id, category: pluralize_upcase(article.classification),
+              classification: article.classification, name: article.name, attributes: article.attributes.to_s}
       if classifications.include? article.classification
         item[:category] = ""
       else
@@ -26,7 +27,7 @@ class ArticlesController < ApplicationController
       items << item
     end
     @articles = items.dup
-
+puts "\narticles index #{@articles}"
     render json: @articles
   end
 
@@ -34,12 +35,9 @@ class ArticlesController < ApplicationController
     @article = Article.create(article_params)
     newColumn = article_params[:newColumn]
     if( newColumn )
-
-puts "\ncreate article adding new column #{article_params}"
+  puts "\ncreate article adding new column #{article_params}"
       @article.add_attr newColumn
-puts "\ncreate article new column #{newColumn} = '" + eval("@article.#{newColumn}") + "'"
-
-
+  puts "\ncreate article new column #{newColumn} = '" + eval("@article.#{newColumn}") + "'"
     end
     render json: @article
   end

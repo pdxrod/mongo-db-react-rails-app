@@ -97,8 +97,13 @@ class Articles extends React.Component {
 
   componentDidMount(){
     fetch('/articles.json')
-      .then((response) => {return response.json()})
-      .then((data) => {this.setState({ articles: data }) });
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        this.handleConsole( "response: "+JSON.stringify(data), true)
+        this.setState({ articles: data })
+      });
   }
 
   render(){
