@@ -16,9 +16,8 @@ class ArticlesController < ApplicationController
 
 # This is to make it show classification (e.g. CAR) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
-
-      item = {id: article.id, category: pluralize_upcase(article.classification),
-              classification: article.classification, name: article.name, attributes: article.attributes.to_s}
+      attributes = article.attributes.except :_id
+      item = {id: article.id, category: pluralize_upcase(article.classification), attributes: attributes}
       if classifications.include? article.classification
         item[:category] = ""
       else
