@@ -32,6 +32,15 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.create(article_params)
+    newColumn = article_params[:newColumn]
+    if( newColumn )
+
+puts "\ncreate article adding new column #{article_params}"
+      @article.add_attr newColumn
+puts "\ncreate article new column #{newColumn} = '" + eval("@article.#{newColumn}") + "'"
+
+
+    end
     render json: @article
   end
 
@@ -53,6 +62,6 @@ class ArticlesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:name, :classification, :id, :category)
+      params.require(:article).permit(:name, :classification, :id, :category, :newColumn)
     end
 end

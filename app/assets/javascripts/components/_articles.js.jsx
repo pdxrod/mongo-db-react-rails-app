@@ -22,8 +22,13 @@ class Articles extends React.Component {
       div.innerText += text
   }
 
-  handleFormSubmit(classification, name){
-    let body = JSON.stringify({article: {classification: classification, name: name} })
+  handleFormSubmit(classification, name, newColumn){
+
+    let body = JSON.stringify({ })
+    if( newColumn )
+      body = JSON.stringify({article: {newColumn: newColumn} })
+    else
+      body = JSON.stringify({article: {classification: classification, name: name} })
 
     fetch('/articles', {
       method: 'POST',
