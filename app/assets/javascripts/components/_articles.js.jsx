@@ -23,7 +23,7 @@ class Articles extends React.Component {
   }
 
   handleFormSubmit(classification, name, newColumn){
-
+this.handleConsole("handleFormSubmit classification "+classification+ " name "+name+ " newColumn "+newColumn, false)
     let body = JSON.stringify({ })
     if( newColumn )
       body = JSON.stringify({article: {newColumn: newColumn} })
@@ -101,7 +101,7 @@ class Articles extends React.Component {
         return response.json()
       })
       .then((data) => {
-        this.handleConsole( "response: "+JSON.stringify(data), true)
+    //    this.handleConsole( "response: "+JSON.stringify(data), false)
         this.setState({ articles: data })
       });
   }
@@ -111,7 +111,7 @@ class Articles extends React.Component {
       <div>
         <AllArticles articles={this.state.articles} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate}
                                               handleConsole={this.handleConsole}/>
-        <div>New</div>
+
         <NewArticle handleFormSubmit={this.handleFormSubmit}/>
       </div>
     )

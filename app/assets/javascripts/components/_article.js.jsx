@@ -20,7 +20,7 @@ class Article extends React.Component{
       this.props.handleConsole("edit article " + name, false)
       this.props.handleUpdate(article)
     } else {
-      this.props.handleConsole("edit article ", true)
+      this.props.handleConsole("edit article ", false)
     }
 
     this.setState({
@@ -34,7 +34,7 @@ class Article extends React.Component{
     let classification = this.state.editable ? <input type='text' ref={input => this.classification = input} defaultValue={this.props.article.attributes.classification}/>:<span></span>
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
-    this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id)
+  //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
 
     return(
       <div>
