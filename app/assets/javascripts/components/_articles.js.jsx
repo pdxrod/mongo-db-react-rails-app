@@ -15,7 +15,7 @@ class Articles extends React.Component {
   }
 
   handleConsole( text, replace ) {
-    div = document.getElementById('console') // $('#console') doesn't work - no JQuery in here
+    let div = document.getElementById('console') // $('#console') doesn't work - no JQuery in here
     if( replace )
       div.innerText = text
     else

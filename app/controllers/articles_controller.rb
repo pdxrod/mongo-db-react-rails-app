@@ -31,16 +31,18 @@ puts "\narticles index #{@articles}"
   end
 
   def create
-    newColumn = article_params[:newColumn]
-    article_params.delete :newColumn 
+    args = article_params.dup
+    newColumn = args.delete :newColumn
+puts "\ncreate article new column is '#{newColumn}'"
+
     if( newColumn )
-  puts "\ncreate article adding new column #{article_params}"
-      @article = Article.create(article_params)
+  puts "\ncreate article adding new column #{args}"
+      @article = Article.create(args)
       @article.add_attr newColumn
   puts "\ncreate article new column #{newColumn} = '" + eval("@article.#{newColumn}") + "'"
     else
-  puts "\ncreate article without new column #{article_params}"
-      @article = Article.create(article_params)
+  puts "\ncreate article without new column #{args}"
+      @article = Article.create(args)
     end
     render json: @article
   end
