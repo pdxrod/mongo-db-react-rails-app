@@ -7,9 +7,9 @@ class Article
 
   def add_attr(attr)
 puts "\n article setting attribute #{attr}"
+    self.class.attribute_names << attr.to_sym
     self.class.module_eval { attr_accessor attr.to_sym }
-    eval "@#{attr} = ''"
-puts "\n article now has methods #{self.methods.select{|m| m.to_s.starts_with? attr}}"
+puts "\n article now has methods #{self.methods.select{|m| m.to_s.starts_with? attr.to_s}}"
   end
 
 end

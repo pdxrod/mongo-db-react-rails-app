@@ -33,14 +33,18 @@ puts "\narticles index #{@articles}"
   def create
     args = article_params.dup
     newColumn = args.delete :newColumn
-puts "\ncreate article new column is '#{newColumn}'"
-
+  puts "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
+
   puts "\ncreate article adding new column #{args}"
       @article = Article.create(args)
       @article.add_attr newColumn
-  puts "\ncreate article new column #{newColumn} = '" + eval("@article.#{newColumn}") + "'"
+      eval "@article.write_attribute(:#{newColumn}, '')"
+  puts "\ncreate article attributes #{@article.attributes}"
+  puts "\ncreate article new column #{newColumn} = '" + eval("@article.read_attribute(:#{newColumn})") + "'"
+
     else
+
   puts "\ncreate article without new column #{args}"
       @article = Article.create(args)
     end
