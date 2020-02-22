@@ -38,10 +38,12 @@ class Article extends React.Component{
 
   //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
     var attrs = Object.keys(attributes).map((key) => {
+      let attr = attributes[ key ]
+      let attribute = this.state.editable ? <input type='text' ref={input => this.attributes[key] = input} defaultValue={attr}/> : <b>{attr}</b>
 
       return(
         <div key={key}>
-          <span> {key} </span><span> {attributes[ key ]} </span>
+          <span> {key} </span><span> {attribute} </span>
         </div>
       )
     })
