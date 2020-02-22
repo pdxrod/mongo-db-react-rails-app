@@ -6,7 +6,12 @@ module OurTextHelper
   end
 end
 
+class NilClass
+  def empty? ; true ; end
+end
+
 class ArticlesController < ApplicationController
+  include ArticlesHelper
   include OurTextHelper
 
   def index
@@ -17,35 +22,37 @@ class ArticlesController < ApplicationController
 # This is to make it show classification (e.g. CARS) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
       attributes = article.attributes.except :_id
-      item = {id: article.id, category: pluralize_upcase(article.classification), attributes: attributes}
-      if classifications.include? article.classification
+      category = article.classification
+      item = {id: article.id, category: pluralize_upcase( category ), attributes: attributes}
+      category = "OTHER" if category.empty?
+      if classifications.include? category
         item[:category] = ""
       else
-        classifications << article.classification
+        classifications << category
       end
       items << item
     end
     @articles = items.dup
-puts "\narticles index #{@articles}"
+debug "\narticles index #{@articles}"
     render json: @articles
   end
 
   def create
     args = article_params.dup
     newColumn = args.delete :newColumn
-  puts "\ncreate article new column is '#{newColumn}'"
+  debug "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
 
-  puts "\ncreate article adding new column #{args}"
+  debug "\ncreate article adding new column #{args}"
 
       @article = Article.new
       @article.add_attr newColumn
       @article.update_attributes(args)
-  puts "\ncreate article attributes #{@article.attributes}"
+  debug "\ncreate article attributes #{@article.attributes}"
 
     else
 
-  puts "\ncreate article without new column #{args}"
+  debug "\ncreate article without new column #{args}"
       @article = Article.create(args)
     end
     render json: @article
