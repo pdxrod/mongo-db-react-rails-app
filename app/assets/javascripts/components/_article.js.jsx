@@ -34,16 +34,27 @@ class Article extends React.Component{
     let classification = this.state.editable ? <input type='text' ref={input => this.classification = input} defaultValue={this.props.article.attributes.classification}/>:<span></span>
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
+    let attributes = this.props.article.attributes
   //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
+    let attrs = []
+    for (var key in attributes){
+      let str = key + " -> " + attributes[key]
+    console.log("\nadding to attrs "+str)
+  // if (key == "name") doSomething();
+    attrs.push( str )
+    }
+
 
     return(
       <div>
-        {category}
+        {category}attributes
         <ul>
           <span> {classification} </span>
           <span> {name} </span>
+          <span> attributes {attrs[0]} </span>
           <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
+
         </ul>
       </div>
     )
