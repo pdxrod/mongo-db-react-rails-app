@@ -37,11 +37,11 @@ puts "\narticles index #{@articles}"
     if( newColumn )
 
   puts "\ncreate article adding new column #{args}"
-      @article = Article.create(args)
+
+      @article = Article.new
       @article.add_attr newColumn
-      eval "@article.write_attribute(:#{newColumn}, '')"
+      @article.update_attributes(args)
   puts "\ncreate article attributes #{@article.attributes}"
-  puts "\ncreate article new column #{newColumn} = '" + eval("@article.read_attribute(:#{newColumn})") + "'"
 
     else
 
