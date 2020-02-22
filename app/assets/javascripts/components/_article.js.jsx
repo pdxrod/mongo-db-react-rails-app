@@ -35,23 +35,23 @@ class Article extends React.Component{
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
     let attributes = this.props.article.attributes
-  //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
-    let attrs = []
-    for (var key in attributes){
-      let str = key + " -> " + attributes[key]
-    console.log("\nadding to attrs "+str)
-  // if (key == "name") doSomething();
-    attrs.push( str )
-    }
 
+  //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
+    var attrs = Object.keys(attributes).map((key) => {
+
+      return(
+        <div key={key}>
+          <span> {key} </span><span> {attributes[ key ]} </span>
+        </div>
+      )
+    })
 
     return(
       <div>
-        {category}attributes
+        {category}
         <ul>
           <span> {classification} </span>
-          <span> {name} </span>
-          <span> attributes {attrs[0]} </span>
+          {attrs}
           <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
 

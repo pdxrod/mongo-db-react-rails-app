@@ -1,7 +1,7 @@
 const AllArticles = (props) => {
 
   var articles = props.articles.map((article) => {
-  const key = article.id['$oid']
+    const key = article.id['$oid']
 
     return(
       <div key={key}>
