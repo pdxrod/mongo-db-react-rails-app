@@ -11,14 +11,15 @@ class Article extends React.Component{
 
   handleEdit(){
    if(this.state.editable) {
-      let name = this.name.value
-      let classification = this.classification.value
       let id = this.props.article.id['$oid']
-      let category = this.props.article.classification
-      let article = {id: id, classification: classification, name: name}
+      let attributes = this.props.article.attributes
+  //    let article = {id: id, ...attributes}
+      let article = attributes
+      article["id"] = id
 
-      this.props.handleConsole("edit article " + name, false)
-      this.props.handleUpdate(article)
+console.log("handleEdit article ", article)
+
+  //    this.props.handleUpdate(article)
     } else {
       this.props.handleConsole("edit article ", false)
     }
@@ -30,16 +31,18 @@ class Article extends React.Component{
   }
 
   render(){
-    let name = this.state.editable ? <input type='text' ref={input => this.name = input} defaultValue={this.props.article.attributes.name}/>:<b>{this.props.article.attributes.name}</b>
-    let classification = this.state.editable ? <input type='text' ref={input => this.classification = input} defaultValue={this.props.article.attributes.classification}/>:<span></span>
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
     let attributes = this.props.article.attributes
-
+    delete attributes[ 'id' ]
   //  this.props.handleConsole(" render "+this.props.article.attributes.name+" id "+id, false)
     var attrs = Object.keys(attributes).map((key) => {
       let attr = attributes[ key ]
-      let attribute = this.state.editable ? <input type='text' ref={input => this.attributes[key] = input} defaultValue={attr}/> : <b>{attr}</b>
+
+  console.log("render article ", attr)
+
+
+      let attribute = this.state.editable ? <input type='text' ref={input => attr = input} defaultValue={attr}/> : <b>{attr}</b>
 
       return(
         <div key={key}>
@@ -52,11 +55,9 @@ class Article extends React.Component{
       <div>
         {category}
         <ul>
-          <span> {classification} </span>
           {attrs}
           <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
-
         </ul>
       </div>
     )
