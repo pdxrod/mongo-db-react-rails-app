@@ -71,10 +71,13 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
   }
 
   handleUpdate(article){
+
+  console.log("handleUpdate article ", article)
+
     fetch(`/articles/${article.id['$oid']}`,
     {
       method: 'PUT',
-      body: JSON.stringify({article: article}),
+      body: JSON.stringify( {article: article} ),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -84,6 +87,9 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
   }
 
   updateArticle(article){
+
+console.log("updateArticle article ", article)
+return
     let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id['$oid'])
     for( i = 0; i < this.state.articles.length; i ++ )
       if( this.state.articles[ i ].id == article.id )

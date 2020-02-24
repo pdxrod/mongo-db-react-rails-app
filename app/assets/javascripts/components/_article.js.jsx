@@ -13,13 +13,15 @@ class Article extends React.Component{
    if(this.state.editable) {
       let id = this.props.article.id['$oid']
       let attributes = this.props.article.attributes
-  //    let article = {id: id, ...attributes}
       let article = attributes
-      article["id"] = id
+      article["id"] = this.props.article.id
+      article.id = this.props.article.id
 
 console.log("handleEdit article ", article)
+console.log("handleEdit article id ", article.id)
+console.log("handleEdit giving article to handleUpdate ", article)
 
-  //    this.props.handleUpdate(article)
+      this.props.handleUpdate(article)
     } else {
       this.props.handleConsole("edit article ", false)
     }
@@ -39,10 +41,11 @@ console.log("handleEdit article ", article)
     var attrs = Object.keys(attributes).map((key) => {
       let attr = attributes[ key ]
 
-  console.log("render article ", attr)
+  console.log("render attr ", attr)
 
-
-      let attribute = this.state.editable ? <input type='text' ref={input => attr = input} defaultValue={attr}/> : <b>{attr}</b>
+      let attribute = this.state.editable ?
+          <input type='text' name="attributes[{attr}]" id="{attributes}_{attr}" defaultValue={attr}/> :
+          <b>{attr}</b>
 
       return(
         <div key={key}>
@@ -56,7 +59,7 @@ console.log("handleEdit article ", article)
         {category}
         <ul>
           {attrs}
-          <span> <button onClick={() => this.handleEdit()}>{this.state.editable? 'save' : 'edit'}</button> </span>
+          <span> <button onClick={() => this.handleEdit()}>{this.state.editable ? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
         </ul>
       </div>
