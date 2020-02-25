@@ -72,9 +72,13 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
 
   handleUpdate(article){
 
-  console.log("handleUpdate article ", article)
+  console.log("handleUpdate article  ", article)
+  let id = article.id['$oid']
+  console.log("handleUpdate fetch id ", id)
+  article.id = id
 
-    fetch(`/articles/${article.id['$oid']}`,
+
+    fetch(`/articles/${id}`,
     {
       method: 'PUT',
       body: JSON.stringify( {article: article} ),
@@ -89,8 +93,8 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
   updateArticle(article){
 
 console.log("updateArticle article ", article)
-return
-    let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id['$oid'])
+
+    let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id)
     for( i = 0; i < this.state.articles.length; i ++ )
       if( this.state.articles[ i ].id == article.id )
         newArticles.splice(i, 0, article);

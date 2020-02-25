@@ -59,6 +59,9 @@ debug "\narticles index #{@articles}"
   end
 
   def update
+    debug "\nupdate article #{article_params}"
+
+
     @article = Article.find(article_params[:id])
     @article.update_attributes(article_params)
     render json: @article
