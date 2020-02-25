@@ -1,7 +1,7 @@
 module OurTextHelper
   def pluralize_upcase(singular)
     the_thing = singular.to_s.upcase
-    return the_thing if the_thing == "FRUIT" || the_thing == "SPORT" # It should be SPORT bar not SPORTS bar
+    return the_thing if ["OTHER", "FRUIT", "SPORT"].include? the_thing # It should be SPORT bar not SPORTS bar
     the_thing.pluralize(2).upcase
   end
 end
@@ -33,26 +33,24 @@ class ArticlesController < ApplicationController
       items << item
     end
     @articles = items.dup
-debug "\narticles index #{@articles}"
+    debug "\narticles index #{@articles}"
     render json: @articles
   end
 
   def create
     args = article_params.dup
     newColumn = args.delete :newColumn
-  debug "\ncreate article new column is '#{newColumn}'"
+    debug "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
-
-  debug "\ncreate article adding new column #{args}"
-
+      debug "\ncreate article #{args} adding new column '#{newColumn}'"
       @article = Article.new
       @article.add_attr newColumn
       @article.update_attributes(args)
-  debug "\ncreate article attributes #{@article.attributes}"
+      debug "\ncreate article attributes #{@article.attributes}"
 
     else
 
-  debug "\ncreate article without new column #{args}"
+      debug "\ncreate article without new column #{args}"
       @article = Article.create(args)
     end
     render json: @article
@@ -60,8 +58,6 @@ debug "\narticles index #{@articles}"
 
   def update
     debug "\nupdate article #{article_params}"
-
-
     @article = Article.find(article_params[:id])
     @article.update_attributes(article_params)
     render json: @article
@@ -69,7 +65,6 @@ debug "\narticles index #{@articles}"
 
   def destroy
     @article = Article.find(article_params[:id])
-
     @article.destroy
     respond_to do |format|
       format.json { head :no_content }

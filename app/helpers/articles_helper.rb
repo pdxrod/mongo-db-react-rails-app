@@ -4,5 +4,5 @@ module ArticlesHelper
   def debug( msg )
     puts msg if DEBUGGING
   end
-  
+
 end

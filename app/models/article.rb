@@ -8,8 +8,8 @@ class Article
 
   def add_attr(arg)
     attr = arg.gsub /\s/, '_'
-debug "\n article setting attribute #{attr}"
-self.class.attribute_names << attr
+    debug "\n article setting attribute #{attr}"
+    self.class.attribute_names << attr
     self.attributes[attr] = ''
     self.class.module_eval { attr_accessor attr.to_sym }
     debug " article now has methods #{self.methods.select{|m| m.to_s.starts_with? attr.to_s}}"

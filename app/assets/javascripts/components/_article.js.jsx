@@ -2,7 +2,6 @@ class Article extends React.Component{
 
   constructor(props){
     super(props);
-
     this.state = {
       editable: false
     }
@@ -24,8 +23,6 @@ class Article extends React.Component{
       })
 
       this.props.handleUpdate(article)
-    } else {
-      this.props.handleConsole("edit article ", false)
     }
 
     this.setState({
@@ -43,7 +40,6 @@ class Article extends React.Component{
 
     var attrs = Object.keys(attributes).map((key) => {
       let attr = attributes[ key ]
-
       if( ! attr ) {
         return(
           <div key={key}></div>
@@ -52,9 +48,9 @@ class Article extends React.Component{
 
       let input_name = "article_" + id + "[" + key + "]"
       let input_id = "article_" + id + "_" + key
-      let attribute = this.state.editable ?
-          <input type='text' name={input_name} id={input_id} defaultValue={attr}/> :
-          <b>{attr}</b>
+      let attribute = this.state.editable
+          ? <input type='text' name={input_name} id={input_id} defaultValue={attr}/>
+          : <b>{attr}</b>
 
       return(
         <div key={key}>

@@ -23,10 +23,9 @@ class Articles extends React.Component {
   }
 
   handleFormSubmit(classification, name, newColumn){
-this.handleConsole("handleFormSubmit classification "+classification+ " name "+name+ " newColumn "+newColumn, false)
     let body = JSON.stringify({ })
     if( newColumn )
-      body = JSON.stringify({article: {newColumn: newColumn} })
+      body = JSON.stringify({article: {newColumn: newColumn, classification: classification, name: name}})
     else
       body = JSON.stringify({article: {classification: classification, name: name} })
 
@@ -71,12 +70,8 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
   }
 
   handleUpdate(article){
-
-  console.log("handleUpdate article  ", article)
-  let id = article.id['$oid']
-  console.log("handleUpdate fetch id ", id)
-  article.id = id
-
+    let id = article.id['$oid']
+    article.id = id
 
     fetch(`/articles/${id}`,
     {
@@ -87,13 +82,10 @@ this.handleConsole("handleFormSubmit classification "+classification+ " name "+n
       }
     }).then((response) => {
         this.updateArticle(article)
-      })
+    })
   }
 
   updateArticle(article){
-
-console.log("updateArticle article ", article)
-
     let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id)
     for( i = 0; i < this.state.articles.length; i ++ )
       if( this.state.articles[ i ].id == article.id )
@@ -111,7 +103,6 @@ console.log("updateArticle article ", article)
         return response.json()
       })
       .then((data) => {
-    //    this.handleConsole( "response: "+JSON.stringify(data), false)
         this.setState({ articles: data })
       });
   }
