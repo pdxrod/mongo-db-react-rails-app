@@ -35,17 +35,12 @@ class Article extends React.Component{
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
     let attributes = this.props.article.attributes
+
     delete attributes[ 'id' ]
     delete attributes[ 'category' ]
 
     var attrs = Object.keys(attributes).map((key) => {
       let attr = attributes[ key ]
-      if( ! attr ) {
-        return(
-          <div key={key}></div>
-        )
-      }
-
       let input_name = "article_" + id + "[" + key + "]"
       let input_id = "article_" + id + "_" + key
       let attribute = this.state.editable

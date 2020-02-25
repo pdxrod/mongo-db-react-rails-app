@@ -6,6 +6,14 @@ module OurTextHelper
   end
 end
 
+class String
+  def random
+    str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').shuffle[0..5].join
+    str.downcase! if( rand( 0..5 ) > 0 )
+    str
+  end
+end
+
 class NilClass
   def empty? ; true ; end
 end
@@ -23,8 +31,8 @@ class ArticlesController < ApplicationController
     @articles.each do |article|
       attributes = article.attributes.except :_id
       category = article.classification
-      item = {id: article.id, category: pluralize_upcase( category ), attributes: attributes}
       category = "OTHER" if category.empty?
+      item = {id: article.id, category: pluralize_upcase( category ), attributes: attributes}
       if classifications.include? category
         item[:category] = ""
       else
@@ -39,6 +47,8 @@ class ArticlesController < ApplicationController
 
   def create
     args = article_params.dup
+    args[:name] = ''.random if args[:name].empty?
+    args[:classification] = ''.random if args[:classification].empty?
     newColumn = args.delete :newColumn
     debug "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
