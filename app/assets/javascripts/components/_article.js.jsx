@@ -43,8 +43,10 @@ console.log("handleEdit giving article to handleUpdate ", article)
 
   console.log("render attr ", attr)
 
+      let input_name = "attributes[" + attr + "]"
+      let input_id = "attributes_" + attr
       let attribute = this.state.editable ?
-          <input type='text' name="attributes[{attr}]" id="{attributes}_{attr}" defaultValue={attr}/> :
+          <input type='text' name={input_name} id={input_id} defaultValue={attr}/> :
           <b>{attr}</b>
 
       return(
