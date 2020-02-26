@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
 # This is to make it show classification (e.g. CARS) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
       attributes = article.attributes.except :_id
-      article.classification = "other" if article.classification.empty?
+      attributes[:classification] = "other" if attributes[:classification].empty?
       category = article.classification
       item = {id: article.id, category: pluralize_upcase( category ), attributes: attributes}
       if classifications.include? category
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
   def create
     args = article_params.dup
     args[:name] = ''.random if args[:name].empty?
-    args[:classification] = 'OTHER' if args[:classification].empty?
+    args[:classification] = 'other' if args[:classification].empty?
     newColumn = args.delete :newColumn
     debug "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
@@ -67,9 +67,22 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    debug "\nupdate article #{article_params}"
-    @article = Article.find(article_params[:id])
-    @article.update_attributes(article_params)
+    args = article_params.dup
+    debug "\nupdate article #{args}"
+    3.times do
+      @article = Article.find(args[:id])
+      args.each do |k, v|
+        debug "\nupdate - setting #{k} to #{v}"
+        @article.attributes[k] = v unless k == 'id'
+      end
+      debug "Saving article #{args[:id]}"
+      @article.save!
+    end
+    @article = Article.find(args[:id])
+    debug "\nupdate article #{args} again"
+    @article.update_attributes(args)
+    @article.save!
+
     render json: @article
   end
 
