@@ -23,15 +23,15 @@ class ArticlesController < ApplicationController
   include OurTextHelper
 
   def index
-    @articles = Article.all
+    @articles = Article.all.sort{ |a, b| a.classification  <=>  b.classification }
     items = []
     classifications = []
 
 # This is to make it show classification (e.g. CARS) only once, at the top of the items - see render() in _article.js.jsx
     @articles.each do |article|
       attributes = article.attributes.except :_id
+      article.classification = "other" if article.classification.empty?
       category = article.classification
-      category = "OTHER" if category.empty?
       item = {id: article.id, category: pluralize_upcase( category ), attributes: attributes}
       if classifications.include? category
         item[:category] = ""
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
   def create
     args = article_params.dup
     args[:name] = ''.random if args[:name].empty?
-    args[:classification] = ''.random if args[:classification].empty?
+    args[:classification] = 'OTHER' if args[:classification].empty?
     newColumn = args.delete :newColumn
     debug "\ncreate article new column is '#{newColumn}'"
     if( newColumn )
@@ -81,9 +81,16 @@ class ArticlesController < ApplicationController
     end
   end
 
-  private
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def article_params
-      params.require(:article).permit(:name, :classification, :id, :category, :newColumn)
+  def add_param(param)
+    class << self
+      def article_params
+        params.require(:article).permit(:name, :classification, :id, :category, :newColumn, param)
+      end
     end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def article_params
+    params.require(:article).permit!
+  end
 end

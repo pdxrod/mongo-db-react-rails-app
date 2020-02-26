@@ -1,6 +1,6 @@
 module ArticlesHelper
 
-  DEBUGGING = false
+  DEBUGGING = true
   def debug( msg )
     puts msg if DEBUGGING
   end
