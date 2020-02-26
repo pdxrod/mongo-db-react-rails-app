@@ -49,19 +49,20 @@ class ArticlesController < ApplicationController
     args = article_params.dup
     args[:name] = ''.random if args[:name].empty?
     args[:classification] = 'other' if args[:classification].empty?
-    newColumn = args.delete :newColumn
+    newColumn = (args.delete :newColumn).to_s.strip
     debug "\ncreate article new column is '#{newColumn}'"
-    if( newColumn )
+
+    if( newColumn.empty? )
+      debug "\ncreate article without new column #{args}"
+      @article = Article.create(args)
+    else
+
       debug "\ncreate article #{args} adding new column '#{newColumn}'"
       @article = Article.new
       @article.add_attr newColumn
       @article.update_attributes(args)
       debug "\ncreate article attributes #{@article.attributes}"
 
-    else
-
-      debug "\ncreate article without new column #{args}"
-      @article = Article.create(args)
     end
     render json: @article
   end
