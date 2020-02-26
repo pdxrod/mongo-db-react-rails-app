@@ -88,7 +88,7 @@ class Articles extends React.Component {
   updateArticle(article){
     let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id)
     for( i = 0; i < this.state.articles.length; i ++ )
-      if( this.state.articles[ i ].id == article.id )
+      if( this.state.articles[ i ].id['$oid'] == article.id )
         newArticles.splice(i, 0, article);
 
     this.setState({
