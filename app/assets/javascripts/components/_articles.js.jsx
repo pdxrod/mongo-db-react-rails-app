@@ -24,10 +24,8 @@ class Articles extends React.Component {
 
   handleFormSubmit(classification, name, newColumn){
     let body = JSON.stringify({ })
-    if( newColumn )
-      body = JSON.stringify({article: {newColumn: newColumn, classification: classification, name: name}})
-    else
-      body = JSON.stringify({article: {classification: classification, name: name} })
+body = JSON.stringify({article: {newColumn: newColumn, classification: classification, name: name}} )
+  console.log("handle form submit body",body)
 
     fetch('/articles', {
       method: 'POST',
@@ -70,10 +68,12 @@ class Articles extends React.Component {
   }
 
   handleUpdate(article){
-    let id = article.id['$oid']
-    article.id = id
+    console.log("handleUpdate article id ",article.id)
 
-    fetch(`/articles/${id}`,
+    let id = article.id
+    let oid = id['$oid']
+
+    fetch(`/articles/${oid}`,
     {
       method: 'PUT',
       body: JSON.stringify( {article: article} ),
@@ -81,19 +81,31 @@ class Articles extends React.Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-        this.updateArticle(article)
+      article.id = id
+      this.updateArticle(article)
     })
   }
 
   updateArticle(article){
-    let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id)
+
+
+    let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id['$oid'])
+
+    console.log("articles ",this.state.articles.length,this.state.articles)
+    console.log("newArticles ",newArticles.length, newArticles)
+    console.log("article ",article)
+    console.log("article id ",article.id)
+
     for( i = 0; i < this.state.articles.length; i ++ )
-      if( this.state.articles[ i ].id['$oid'] == article.id )
-        newArticles.splice(i, 0, article);
+      if( this.state.articles[ i ].id['$oid'] == article.id['$oid'] ) {
+        newArticles.splice(i, 0, article)
+      }
+console.log("newArticles ",newArticles.length, newArticles)
 
     this.setState({
       articles: newArticles
     })
+
     window.location.reload()
   }
 

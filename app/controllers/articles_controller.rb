@@ -70,7 +70,7 @@ class ArticlesController < ApplicationController
     args = article_params.dup
     debug "\nupdate article #{args}"
     3.times do
-      @article = Article.find(args[:id])
+      @article = Article.find(args[:id]["$oid"])
       args.each do |k, v|
         debug "\nupdate - setting #{k} to #{v}"
         @article.attributes[k] = v unless k == 'id'
@@ -78,7 +78,7 @@ class ArticlesController < ApplicationController
       debug "Saving article #{args[:id]}"
       @article.save!
     end
-    @article = Article.find(args[:id])
+    @article = Article.find(args[:id]["$oid"])
     debug "\nupdate article #{args} again"
     @article.update_attributes(args)
     @article.save!

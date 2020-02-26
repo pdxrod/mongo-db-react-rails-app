@@ -35,11 +35,12 @@ class Article extends React.Component{
     let id = this.props.article.id['$oid']
     let category = <h3>{this.props.article.category}</h3>
     let attributes = this.props.article.attributes
-
-    delete attributes[ 'id' ]
-    delete attributes[ 'category' ]
+    if( ! attributes ) attributes = this.props.article
 
     var attrs = Object.keys(attributes).map((key) => {
+      if( 'id' == key || 'category' == key )
+        return('')
+        
       let attr = attributes[ key ]
       let input_name = "article_" + id + "[" + key + "]"
       let input_id = "article_" + id + "_" + key
