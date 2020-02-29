@@ -23,9 +23,7 @@ class Articles extends React.Component {
   }
 
   handleFormSubmit(classification, name, newColumn){
-    let body = JSON.stringify({ })
-body = JSON.stringify({article: {newColumn: newColumn, classification: classification, name: name}} )
-  console.log("handle form submit body",body)
+    let body = JSON.stringify({article: {newColumn: newColumn, classification: classification, name: name}} )
 
     fetch('/articles', {
       method: 'POST',
@@ -68,8 +66,6 @@ body = JSON.stringify({article: {newColumn: newColumn, classification: classific
   }
 
   handleUpdate(article){
-    console.log("handleUpdate article id ",article.id)
-
     let id = article.id
     let oid = id['$oid']
 
@@ -87,20 +83,12 @@ body = JSON.stringify({article: {newColumn: newColumn, classification: classific
   }
 
   updateArticle(article){
-
-
     let newArticles = this.state.articles.filter((f) => f.id['$oid'] !== article.id['$oid'])
-
-    console.log("articles ",this.state.articles.length,this.state.articles)
-    console.log("newArticles ",newArticles.length, newArticles)
-    console.log("article ",article)
-    console.log("article id ",article.id)
 
     for( i = 0; i < this.state.articles.length; i ++ )
       if( this.state.articles[ i ].id['$oid'] == article.id['$oid'] ) {
         newArticles.splice(i, 0, article)
       }
-console.log("newArticles ",newArticles.length, newArticles)
 
     this.setState({
       articles: newArticles

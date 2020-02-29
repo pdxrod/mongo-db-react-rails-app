@@ -83,7 +83,6 @@ class ArticlesController < ApplicationController
       debug "setting '#{k}' to '#{v}'" unless k.to_s == 'id'
       @article.attributes[ k ] = "#{ v }" unless k.to_s == 'id'
     end
-    @article.update_attributes(args)
     @article.save!
     debug "\n"
 
