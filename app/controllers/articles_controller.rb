@@ -61,6 +61,7 @@ class ArticlesController < ApplicationController
       @article = Article.new
       @article.add_attr newColumn
       @article.update_attributes(args)
+      @article.save!
       debug "\ncreate article attributes #{@article.attributes}"
 
     end
@@ -70,19 +71,21 @@ class ArticlesController < ApplicationController
   def update
     args = article_params.dup
     debug "\nupdate article #{args}"
-    3.times do
-      @article = Article.find(args[:id]["$oid"])
-      args.each do |k, v|
-        debug "\nupdate - setting #{k} to #{v}"
-        @article.attributes[k] = v unless k == 'id'
-      end
-      debug "Saving article #{args[:id]}"
-      @article.save!
-    end
     @article = Article.find(args[:id]["$oid"])
-    debug "\nupdate article #{args} again"
+    debug "@article #{@article.attributes}"
+    debug "Recreating article #{args[:id]}"
+    @article.destroy
+    @article = Article.new
+    args.each do |k, v|
+      @article.add_attr k unless ['id', 'name', 'classification'].include? k.to_s
+    end
+    args.each do |k, v|
+      debug "setting '#{k}' to '#{v}'" unless k.to_s == 'id'
+      @article.attributes[ k ] = "#{ v }" unless k.to_s == 'id'
+    end
     @article.update_attributes(args)
     @article.save!
+    debug "\n"
 
     render json: @article
   end
