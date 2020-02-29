@@ -4,7 +4,7 @@ ruby '2.3.0'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
 
 gem 'sqlite3'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
@@ -14,7 +14,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mongoid', '~> 6.0'
 gem 'bson_ext'
 gem 'react-rails', '~> 2.4.7'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'sass-rails', '~> 5.0'
 
 group :development, :test do
