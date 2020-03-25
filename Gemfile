@@ -29,6 +29,6 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver', '~> 3.142.7'
   gem 'chromedriver-helper', '~> 2.1.1'
-  gem 'cucumber-rails', '~> 2.0.0'
+  gem 'cucumber-rails', '~> 2.0.0', require: false
   gem 'database_cleaner-mongoid', '~> 1.8.1'
 end
