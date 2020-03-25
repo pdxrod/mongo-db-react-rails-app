@@ -3,4 +3,14 @@
 
 require_relative 'config/application'
 
+require 'cucumber'
+require 'cucumber/rake/task'
+
 Rails.application.load_tasks
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "--format pretty" # Any valid command line option can go here.
+end
+
+
+

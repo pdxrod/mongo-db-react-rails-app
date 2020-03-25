@@ -40,7 +40,7 @@ class Article extends React.Component{
     var attrs = Object.keys(attributes).map((key) => {
       if( 'id' == key || 'category' == key )
         return('')
-        
+
       let attr = attributes[ key ]
       let input_name = "article_" + id + "[" + key + "]"
       let input_id = "article_" + id + "_" + key
