@@ -3,5 +3,5 @@ When(/^I go to the homepage$/) do
 end
 
 Then(/^I should see the introductory message$/) do
-  expect(page).to have_content("MongoDB/Rails/React App")
+  assert(body.include? "MongoDB/Rails/React App")
 end
