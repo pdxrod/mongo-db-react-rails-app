@@ -1,5 +1,8 @@
 {
   "name": "mongo_app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "react-cucumber": "1.0.7"
+  }
 }
