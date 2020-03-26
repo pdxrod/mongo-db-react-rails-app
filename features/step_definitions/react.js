@@ -1,9 +1,7 @@
 const { register } = require('react-cucumber');
-// require your components here, for example:
-const { Article } = require('../../app/assets/javascripts/components/_article');
-// ...
+const { UpperCaseInput } = require('../../app/assets/javascripts/components/upper-case-input');
 
 register([
-  Article,
-  // ... more components here
+  UpperCaseInput
+
 ]);
