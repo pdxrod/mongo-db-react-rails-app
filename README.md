@@ -18,6 +18,8 @@ In a separate window, run this app by cd-ing into the folder containing it and t
 
 `bundle`
 
+`npm install`
+
 `rails s`
 
 Then in a browser, navigate to http://localhost:3000
