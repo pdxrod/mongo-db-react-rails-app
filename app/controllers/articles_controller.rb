@@ -76,7 +76,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(args[:id]["$oid"])
     @article.destroy
     @article = Article.new
-    
+
     unless newColumn.empty?
       @article.add_attr newColumn
     end
@@ -98,26 +98,7 @@ class ArticlesController < ApplicationController
   end
 
 private
-  def recreate_article( args )
-    newColumn = (args.delete :newColumn).to_s.strip
-
-    if( newColumn.empty? )
-      debug "\nrecreate article without new column #{args}"
-      @article = Article.create(args)
-
-    else
-
-      debug "\nrecreate article #{args} adding new column '#{newColumn}'"
-      @article = Article.new
-      @article.add_attr newColumn
-      @article.update_attributes(args)
-      @article.save!
-    end
-    debug "\nrecreate article attributes #{@article.attributes}"
-
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
+# Never trust parameters from the scary internet, only allow the white list through.
   def article_params
     params.require(:article).permit!
   end
