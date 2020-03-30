@@ -49,24 +49,9 @@ class ArticlesController < ApplicationController
     args = article_params.dup
     args[:name] = ''.random if args[:name].empty?
     args[:classification] = 'other' if args[:classification].empty?
-    newColumn = (args.delete :newColumn).to_s.strip
-    debug "\ncreate article new column is '#{newColumn}'"
 
-    if( newColumn.empty? )
+    recreate_article args
 
-      debug "\ncreate article without new column #{args}"
-      @article = Article.create(args)
-
-    else
-
-      debug "\ncreate article #{args} adding new column '#{newColumn}'"
-      @article = Article.new
-      @article.add_attr newColumn
-      @article.update_attributes(args)
-      @article.save!
-      debug "\ncreate article attributes #{@article.attributes}"
-
-    end
     render json: @article
   end
 
@@ -76,24 +61,9 @@ class ArticlesController < ApplicationController
     @article = Article.find(args[:id]["$oid"])
     debug "@article #{@article.attributes}"
     debug "Recreating article #{args[:id]}"
-    newColumn = (args.delete :newColumn).to_s.strip
     @article.destroy
-    if( newColumn.empty? )
 
-      debug "\nupdate article without new column #{args}"
-      @article = Article.create(args)
-
-    else
-
-      debug "\nupdate article #{args} adding new column '#{newColumn}'"
-      @article = Article.new
-      @article.add_attr newColumn
-      @article.update_attributes(args)
-      @article.save!
-      debug "\nupdate article attributes #{@article.attributes}"
-
-    end
-    debug "\n"
+    recreate_article args
 
     render json: @article
   end
@@ -111,6 +81,25 @@ class ArticlesController < ApplicationController
       def article_params
         params.require(:article).permit(:name, :classification, :id, :category, :newColumn, param)
       end
+    end
+  end
+
+private
+  def recreate_article( args )
+    newColumn = (args.delete :newColumn).to_s.strip
+
+    if( newColumn.empty? )
+      debug "\nrecreate article without new column #{args}"
+      @article = Article.create(args)
+
+    else
+
+      debug "\nrecreate article #{args} adding new column '#{newColumn}'"
+      @article = Article.new
+      @article.add_attr newColumn
+      @article.update_attributes(args)
+      @article.save!
+      debug "\nrecreate article attributes #{@article.attributes}"
     end
   end
 

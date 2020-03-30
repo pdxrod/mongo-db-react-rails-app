@@ -22,6 +22,14 @@ class Article extends React.Component{
         }
       })
 
+      let input_id = "article_" + id + "_newColumn"
+      let attr = document.getElementById( input_id )
+      if( attr ) {
+        val = attr.value.trim()
+        if( val )
+          article[ 'newColumn' ] = val
+      }
+
       this.props.handleUpdate(article)
     }
 
@@ -55,13 +63,17 @@ class Article extends React.Component{
       )
     })
 
-    let key = this.state.editable ? 'new column' : ''
+    let key = this.state.editable ? 'newColumn' : ''
+    let name = this.state.editable ? 'new column' : ''
+    let input_name = "article_" + id + "[" + 'newColumn' + "]"
+    let input_id = "article_" + id + "_" + 'newColumn'
+
     let attribute = this.state.editable
-        ? <input type='text' name='newColumn' id='newColumn' placeholder='new column name'/>
+        ? <input type='text' name={input_name} id={input_id} placeholder='new column name' defaultValue=' '/>
         : <b></b>
     let newColumn =
-        <span key='newColumn'>
-          <span> {key} </span><span> {attribute} </span>
+        <span key={key}>
+          <span> {name} </span><span> {attribute} </span>
         </span>
 
     attrs = Array.prototype.concat( attrs, newColumn )
