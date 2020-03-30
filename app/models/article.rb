@@ -7,7 +7,7 @@ class Article
   field :classification, type: String
 
   def add_attr(arg)
-    attr = arg.gsub /\s/, '_'
+    attr = arg.gsub /[^a-zA-Z\d]/, '_'
     debug "\n article setting attribute #{attr}"
     self.class.attribute_names << attr
     self.attributes[attr] = ''
