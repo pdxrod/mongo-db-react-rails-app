@@ -6,11 +6,12 @@ module OurTextHelper
   end
 end
 
+ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ'
+RANGE = 0..5
 class String
   def random
-    str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').shuffle[0..5].join
-    str.downcase! if( rand( 0..5 ) > 0 )
-    str
+    str = ALPHABET.downcase + ALPHABET.split('').shuffle[RANGE].join + '2345678'
+    str.split('').shuffle[RANGE].join
   end
 end
 
@@ -49,6 +50,7 @@ class ArticlesController < ApplicationController
     args = article_params.dup
     args[:name] = ''.random if args[:name].empty?
     args[:classification] = 'other' if args[:classification].empty?
+    debug "\ncreate article #{args}"
 
     recreate_article args
 
@@ -60,7 +62,6 @@ class ArticlesController < ApplicationController
     debug "\nupdate article #{args}"
     @article = Article.find(args[:id]["$oid"])
     debug "@article #{@article.attributes}"
-    debug "Recreating article #{args[:id]}"
     @article.destroy
 
     recreate_article args
@@ -73,14 +74,6 @@ class ArticlesController < ApplicationController
     @article.destroy
     respond_to do |format|
       format.json { head :no_content }
-    end
-  end
-
-  def add_param(param)
-    class << self
-      def article_params
-        params.require(:article).permit(:name, :classification, :id, :category, :newColumn, param)
-      end
     end
   end
 
@@ -99,8 +92,9 @@ private
       @article.add_attr newColumn
       @article.update_attributes(args)
       @article.save!
-      debug "\nrecreate article attributes #{@article.attributes}"
     end
+    debug "\nrecreate article attributes #{@article.attributes}"
+
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
