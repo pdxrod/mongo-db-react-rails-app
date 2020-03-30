@@ -55,11 +55,23 @@ class Article extends React.Component{
       )
     })
 
+    let key = this.state.editable ? 'new column' : ''
+    let attribute = this.state.editable
+        ? <input type='text' name='newColumn' id='newColumn' placeholder='new column name'/>
+        : <b></b>
+    let newColumn =
+        <span key='newColumn'>
+          <span> {key} </span><span> {attribute} </span>
+        </span>
+
+    attrs = Array.prototype.concat( attrs, newColumn )
+
     return(
       <div>
         {category}
         <ul>
           {attrs}
+          <span> {this.state.editable ? <br /> : <b></b>} </span>
           <span> <button onClick={() => this.handleEdit()}>{this.state.editable ? 'save' : 'edit'}</button> </span>
           <button onClick={() => this.props.handleDelete(this.props.article)}>delete</button>
         </ul>

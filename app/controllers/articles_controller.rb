@@ -53,8 +53,10 @@ class ArticlesController < ApplicationController
     debug "\ncreate article new column is '#{newColumn}'"
 
     if( newColumn.empty? )
+
       debug "\ncreate article without new column #{args}"
       @article = Article.create(args)
+
     else
 
       debug "\ncreate article #{args} adding new column '#{newColumn}'"
@@ -74,16 +76,23 @@ class ArticlesController < ApplicationController
     @article = Article.find(args[:id]["$oid"])
     debug "@article #{@article.attributes}"
     debug "Recreating article #{args[:id]}"
+    newColumn = (args.delete :newColumn).to_s.strip
     @article.destroy
-    @article = Article.new
-    args.each do |k, v|
-      @article.add_attr k unless ['id', 'name', 'classification'].include? k.to_s
+    if( newColumn.empty? )
+
+      debug "\nupdate article without new column #{args}"
+      @article = Article.create(args)
+
+    else
+
+      debug "\nupdate article #{args} adding new column '#{newColumn}'"
+      @article = Article.new
+      @article.add_attr newColumn
+      @article.update_attributes(args)
+      @article.save!
+      debug "\nupdate article attributes #{@article.attributes}"
+
     end
-    args.each do |k, v|
-      debug "setting '#{k}' to '#{v}'" unless k.to_s == 'id'
-      @article.attributes[ k ] = "#{ v }" unless k.to_s == 'id'
-    end
-    @article.save!
     debug "\n"
 
     render json: @article
