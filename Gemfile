@@ -12,7 +12,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mongoid', '~> 6.0'
 gem 'bson_ext', '~> 1.5.1'
 gem 'react-rails', '~> 2.4.7'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 
 group :development, :test do
   gem 'byebug', '~> 11.0.1', platforms: [:mri, :mingw, :x64_mingw]
